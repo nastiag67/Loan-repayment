@@ -392,13 +392,16 @@ def plot(df, columns, df_clean, df_outliers, plot_cols=4):
                     )
 
 
-def show(df, columns, how='z_score', show_plot=False, **kwargs):
+def show_outliers(df, columns, how='z_score', show_plot=False, **kwargs):
     """Detects outliers using one of the available methods.
 
     Parameters:
     ----------
-    columns : str
-        A string of columns which will be analysed together.
+    df : dataframe
+        Feature dataframe.
+
+    columns : list
+        A list of columns which will be analysed together.
 
     how : str, default=z_score
         Method using which the outliers are detected.
@@ -436,10 +439,10 @@ def show(df, columns, how='z_score', show_plot=False, **kwargs):
         df_clean, df_outliers = IQR(df, columns, kwargs['q1'])
     else:
         raise AttributeError('Unknown outlier detection method. Existing methods: z_score, IQR')
-
     df = df.copy()
     df['outliers'] = df.index.isin(df_outliers.index).copy()
 
+    # print('-'*100)
     if show_plot:
         plot(df, columns, df_clean, df_outliers)
 
