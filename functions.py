@@ -39,6 +39,27 @@ def yellow(s):
     return '\033[1;33m%s\033[m' % s
 
 
+def to_dates(df, cols):
+    """ Changes column format to datetime.
+
+    Parameters:
+    ----------
+    df : dataframe
+        Dataframe with columns which are falsely not recognised as datetime.
+
+    cols : list
+        list of columns, formats of which need to be corrected.
+
+    Returns
+    ----------
+    df : dataframe with corrected column formats
+
+    """
+    for col in cols:
+        df[col] = pd.to_datetime(df[col])
+    return df
+
+
 def get_randomdata(df, n=None, frac=None):
     """ Returns n or a fraction of randomly chosen rows.
 
