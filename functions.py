@@ -8,6 +8,8 @@ import matplotlib.pyplot as plt
 import scipy.stats
 from pandas_profiling import ProfileReport
 
+import utils as u
+
 from sklearn.metrics import classification_report, confusion_matrix
 from sklearn.metrics import jaccard_similarity_score
 from sklearn.metrics import f1_score
@@ -16,48 +18,6 @@ from sklearn.linear_model import LogisticRegression
 from sklearn import svm
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.neighbors import KNeighborsClassifier
-
-
-# LOGS
-def log(*m):
-    print(" ".join(map(str, m)))
-
-
-def black(s):
-    return '\033[1;30m%s\033[m' % s
-
-
-def green(s):
-    return '\033[1;32m%s\033[m' % s
-
-
-def red(s):
-    return '\033[1;31m%s\033[m' % s
-
-
-def yellow(s):
-    return '\033[1;33m%s\033[m' % s
-
-
-def to_dates(df, cols):
-    """ Changes column format to datetime.
-
-    Parameters:
-    ----------
-    df : dataframe
-        Dataframe with columns which are falsely not recognised as datetime.
-
-    cols : list
-        list of columns, formats of which need to be corrected.
-
-    Returns
-    ----------
-    df : dataframe with corrected column formats
-
-    """
-    for col in cols:
-        df[col] = pd.to_datetime(df[col])
-    return df
 
 
 def get_randomdata(df, n=None, frac=None):
@@ -165,14 +125,14 @@ def get_summary(df,
     if nan:
         nans = list(
             pd.DataFrame(df.isna().sum()).rename(columns={0: 'NaNs'}).reset_index().query("NaNs>0")['index'])
-        log(black('NaNs: '), nans)
+        u.log(u.black('NaNs: '), nans)
     else:
         nans = False
 
     # Checking for unique formats
     if formats:
         unique_formats = list(df.dtypes.unique())
-        log(black('Unique formats: '), unique_formats)
+        u.log(u.black('Unique formats: '), unique_formats)
     else:
         formats is False
 
@@ -184,7 +144,7 @@ def get_summary(df,
             set_unique = set(df[col])
             if len(set_unique) <= num_ifcategorical:
                 possibly_categorical.append(col)
-        log(black(f'Possible categorical variables (<{num_ifcategorical} unique values): '), possibly_categorical)
+        u.log(u.black(f'Possible categorical variables (<{num_ifcategorical} unique values): '), possibly_categorical)
     else:
         categorical is False
 
@@ -192,7 +152,7 @@ def get_summary(df,
     if min_less_0:
         lst_less0 = list(
             pd.DataFrame(df_numeric[df_numeric < 0].any()).rename(columns={0: 'flag'}).query("flag==True").index)
-        log(black(f'Min value < 0: '), lst_less0)
+        u.log(u.black(f'Min value < 0: '), lst_less0)
     else:
         min_less_0 is False
 
@@ -201,7 +161,7 @@ def get_summary(df,
         plt.style.use('seaborn-white')
 
         if plot_cols > len(df_numeric.columns) - 2:
-            # log(yellow('ERROR: '), f"Can't use more than {len(columns) - 2} columns.")
+            # u.log(u.yellow('ERROR: '), f"Can't use more than {len(columns) - 2} columns.")
             plot_cols = len(df_numeric.columns) - 2
             if len(df_numeric.columns) - 2 < 3:
                 plot_cols = len(df_numeric.columns)
@@ -232,7 +192,7 @@ def get_summary(df,
                 plt.plot(x, y_var, color='black', linestyle='dashed')
 
     if check_normdist:
-        log(black('Plotting distributions of variables against normal distribution'))
+        u.log(u.black('Plotting distributions of variables against normal distribution'))
         check_distribution(df_numeric.columns, plot_cols=6)
 
 
@@ -247,7 +207,7 @@ def get_summary(df,
         df_selected = df.select_dtypes(exclude=col_types)
 
         if plot_cols > len(df_selected.columns) - 2:
-            # log(yellow('ERROR: '), f"Can't use more than {len(columns) - 2} columns.")
+            # u.log(u.yellow('ERROR: '), f"Can't use more than {len(columns) - 2} columns.")
             plot_cols = len(df_selected.columns) - 2
 
         # figure size = (width,height)
@@ -265,7 +225,7 @@ def get_summary(df,
                 sns.boxplot(x=df[x], y=y, data=df_selected)
 
     if plot_boxplots:
-        log(black('Plotting boxplots'))
+        u.log(u.black('Plotting boxplots'))
         boxplots(df_numeric.columns, plot_cols=6)
 
 
@@ -363,7 +323,7 @@ def plot(df, columns, df_clean, df_outliers, plot_cols=4):
     plt.style.use('seaborn-white')
 
     if plot_cols > len(columns) - 2:
-        log(yellow('ERROR: '), f"Can't use more than {len(columns) - 2} columns in one row.")
+        u.log(u.yellow('ERROR: '), f"Can't use more than {len(columns) - 2} columns in one row.")
         plot_cols = len(columns) - 2
 
     # figure size = (width,height)
