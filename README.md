@@ -12,3 +12,4 @@ Analysis of [loans data](https://www.kaggle.com/zhijinzhai/loandata?select=Loan+
 https://nbviewer.jupyter.org/github/nastiag67/Loan-repayment/blob/master/main.ipynb
 
 <!-- # The result and conclusions -->
+
