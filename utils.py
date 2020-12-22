@@ -31,10 +31,6 @@ def yellow(s):
     return '\033[1;33m%s\033[m' % s
 
 
-# def log_exit(*m):
-#     log(red("ERROR:"), *m)
-#     exit(1)
-
 def to_dates(df, cols):
     """ Changes column format to datetime.
 
