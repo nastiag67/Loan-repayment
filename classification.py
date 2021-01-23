@@ -95,7 +95,7 @@ def plot_confusion_matrix(y_test,
     Normalization can be applied by setting `normalize=True`.
     """
     # Compute confusion matrix
-    cnf_matrix = confusion_matrix(y_test, yhat, labels)
+    cnf_matrix = confusion_matrix(y_test, yhat, labels=labels)
     np.set_printoptions(precision=2)
 
     if normalize:
@@ -103,8 +103,6 @@ def plot_confusion_matrix(y_test,
         print("Normalized confusion matrix")
     else:
         print('Confusion matrix, without normalization')
-
-    # print(cnf_matrix)
 
     plt.imshow(cnf_matrix, interpolation='nearest', cmap=cmap)
     plt.title(title)
