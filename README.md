@@ -8,5 +8,6 @@ Analysis of [loans data](https://www.kaggle.com/zhijinzhai/loandata?select=Loan+
 - Support Vector Machine, 
 - Logistic Regression.
 
+
  # The result and conclusions 
 https://nbviewer.jupyter.org/github/nastiag67/Loan-repayment/blob/master/main.ipynb
