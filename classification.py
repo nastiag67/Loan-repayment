@@ -23,12 +23,6 @@ def knn_findk(Ks, X_train, y_train, X_test, y_test):
     mean_acc = np.zeros((Ks - 1))
     std_acc = np.zeros((Ks - 1))
 
-    # for k in range(1, Ks):
-    #     kNN_model = KNeighborsClassifier(n_neighbors=k).fit(X_train, y_train)
-    #     yhat = kNN_model.predict(X_test)
-    #     mean_acc[k - 1] = np.mean(yhat == y_test)  # mean accuracy
-    #     std_acc[k - 1] = np.std(yhat == y_test) / np.sqrt(yhat.shape[0])  # std
-
     best_k = None
     best_acc = None
     best_model = None
