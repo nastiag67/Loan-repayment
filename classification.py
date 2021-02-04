@@ -16,8 +16,6 @@ from sklearn.metrics import classification_report, confusion_matrix
 #######################################################################################################################
 def knn_findk(Ks, X_train, y_train, X_test, y_test):
     """
-    Then chose k =1, use the training part for modeling, and calculate the accuracy of prediction using all samples in
-    your test set. Repeat this process, increasing the k, and see which k is the best for your model.
     """
     # will test several k's
     mean_acc = np.zeros((Ks - 1))
